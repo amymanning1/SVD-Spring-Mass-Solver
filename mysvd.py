@@ -29,7 +29,8 @@ def svd_inv(eigenvalues_u, eigenvalues_v,eigenvectors_u,eigenvectors_v, A):
         same_sign = np.sign((A @ V)[0][0] * (U @ np.diag(eigenvalues_u))[0][0])
         V = V * same_sign.reshape(1, -1)
         sigma = np.zeros((A.shape[0], A.shape[1]))
-        np.fill_diagonal(sigma,eigenvalues_v.real)
+        
+        np.fill_diagonal(sigma,np.sqrt(eigenvalues_v.real))
         
     i=1
     for i in sigma:
@@ -52,8 +53,8 @@ def calc_condNum(eigenvalues_v):
     return condNum
 
 def main():
-    #num_list=[[1, 2],[3, 4]]
-    #A = np.array(num_list)
+    num_list=[[1, 2],[3, 4]]
+    A = np.array(num_list)
     eigenvalues_u, eigenvectors_u, eigenvalues_v, eigenvectors_v = calc_eig(A)
     U,V,sigma,A_inv = svd_inv(eigenvalues_u, eigenvalues_v, eigenvectors_u, eigenvectors_v,A)
 
@@ -66,7 +67,8 @@ def main():
     condNum = calc_condNum(eigenvalues_v)
     print('Condition Number: ')
     print(condNum)
-    #print('A^-1 = '+ A_inv + '\n')
+    print('A^-1 = ')
+    print(A_inv)
     
 
 if __name__ == '__main__':
